@@ -1,0 +1,29 @@
+<h1>Register as a Vendor</h1>
+
+<% if @vendor.errors.any? %>
+  <% @vendor.errors.full_messages.each do |error| %>
+    <p style="color: red;"><%= error %></p>
+  <% end %>
+<% end %>
+
+<%= form_with model: @vendor, url: vendors_path do |f| %>
+  <div>
+    <%= f.label :bussiness_name %>
+    <%= f.text_field :bussiness_name %>
+  </div>
+
+  <div>
+    <%= f.label :bussiness_description %>
+    <%= f.text_area :bussiness_description %>
+  </div>
+
+  <div>
+    <%= f.label :gst_id %>
+    <%= f.text_field :gst_id %>
+  </div>
+
+  <div>
+    <%= f.submit "Register as Vendor" %>
+  </div>
+
+<% end %>

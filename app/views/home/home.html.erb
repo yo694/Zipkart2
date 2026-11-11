@@ -2,6 +2,12 @@
 
 <% if user_signed_in? %>
   <h2>Hello, <%= current_user.name %></h2>
+
+  <% unless current_user.vendor.present? %>
+  <p> Want to register as a vendor? </p>
+  <%= link_to "Become Vendor" , new_vendor_path %>
+  <% end %>
+
   <%= button_to "Logout", destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to "Sign Up", new_user_registration_path %>
