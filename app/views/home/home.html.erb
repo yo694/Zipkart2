@@ -3,7 +3,9 @@
 <% if user_signed_in? %>
   <h2>Hello, <%= current_user.name %></h2>
 
-  <% unless current_user.vendor.present? %>
+  <% if current_user.vendor.present? %>
+  <%= link_to "Switch to Vendor Account", vendor_path %>
+  <% else %>
   <p> Want to register as a vendor? </p>
   <%= link_to "Become Vendor" , new_vendor_path %>
   <% end %>
