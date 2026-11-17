@@ -1,0 +1,56 @@
+<h1>Edit Product</h1>
+
+<%= form_with model: @product do |f| %>
+  <p>
+    <%= f.label :product_name %>
+    <%= f.text_field :product_name %>
+  </p>
+
+  <p>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </p>
+
+  <h3>Product Variants</h3>
+
+  <%= f.fields_for :product_variants do |v| %>
+    <p>
+      <%= v.label :colour %>
+      <%= v.text_field :colour %>
+    </p>
+
+    <p>
+      <%= v.label :size %>
+      <%= v.text_field :size %>
+    </p>
+
+    <p>
+      <%= v.label :model %>
+      <%= v.text_field :model %>
+    </p>
+
+    <p>
+      <%= v.label :price %>
+      <%= v.number_field :price %>
+    </p>
+
+    <p>
+      <%= v.label :total_qty %>
+      <%= v.number_field :total_qty %>
+    </p>
+
+    <p>
+      <%= v.label :available_qty %>
+      <%= v.number_field :available_qty %>
+    </p>
+
+    <p>
+      <%= v.check_box :_destroy %>
+      <%= v.label :_destroy, "Remove this variant" %>
+    </p>
+  <% end %>
+
+  <%= f.submit "Update Product" %>
+<% end %>
+
+<%= link_to "Back", products_path %>

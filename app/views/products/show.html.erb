@@ -1,0 +1,19 @@
+<h1><%= @product.product_name %></h1>
+
+<p><%= @product.description %></p>
+
+<h2>Variants</h2>
+
+<% @product.product_variants.each do |variant| %>
+  <p>Colour: <%= variant.colour %></p>
+  <p>Size: <%= variant.size %></p>
+  <p>Model: <%= variant.model %></p>
+  <p>Price: <%= variant.price %></p>
+  <p>Available: <%= variant.available_qty %></p>
+  <hr>
+<% end %>
+
+<% if current_user.vendor %>
+  <%= link_to "Edit", edit_product_path(@product) %>
+<% end %>
+<%= link_to "Back", products_path %>
