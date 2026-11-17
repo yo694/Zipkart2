@@ -10,9 +10,4 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :phone, presence: true
 
-  enum :role, {
-     customer: 0,
-     admin: 1
-  }
-
 end

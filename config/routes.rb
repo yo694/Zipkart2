@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    root 'home#index'
+  end
+  devise_for :admins , skip: [:registrations]
   get 'home/home'
   devise_for :users
   resources :vendors, only: [:new , :create]

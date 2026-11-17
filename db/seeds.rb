@@ -7,3 +7,18 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+admin_email = "admin@gmail.com"
+admin_password = "kpass123"
+
+if Admin.exists?(email: admin_email)
+  puts "Admin already exists. No new data inserted."
+else
+  Admin.create!(
+    email: admin_email,
+    password: admin_password,
+    password_confirmation: admin_password
+  )
+
+  puts "Admin created successfully!"
+end
