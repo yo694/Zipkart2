@@ -1,0 +1,26 @@
+<h2>Order Details</h2>
+
+<p>Order ID: <%= @order.id %></p>
+
+<p>Status: <%= @order.status %></p>
+
+<p>Total Amount: ₹<%= @order.total_amount %></p>
+
+<h2>Ordered Products</h2>
+
+<% @order.order_items.each do |item| %>
+  <div>
+    <p>Product: <%= item.product_variant.product.product_name %></p>
+
+    <p>Quantity: <%= item.qty %></p>
+
+    <p>Price: ₹<%= item.price %></p>
+
+    <p>Subtotal: ₹<%= item.qty * item.price %></p>
+  </div>
+  <hr>
+<% end %>
+
+<%= link_to "Continue Shopping", products_path %>
+
+<%= link_to "My Orders", orders_path %>

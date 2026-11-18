@@ -1,0 +1,17 @@
+<h1>My Orders</h1>
+
+<% @orders.each do |order| %>
+  <div>
+    <h3>Order #<%= order.id %></h3>
+
+    <p>Status: <%= order.status %></p>
+
+    <p>Total: ₹<%= order.total_amount %></p>
+
+    <%= link_to "View Order", order_path(order) %>
+  </div>
+
+  <hr>
+<% end %>
+
+<%= link_to "Continue Shopping", products_path %>
