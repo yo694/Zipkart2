@@ -7,7 +7,12 @@ Rails.application.routes.draw do
   devise_for :users
   resources :vendors, only: [:new , :create]
   resources :products
-  resources :carts, only: [:show, :edit, :update, :destroy]
+  resources :carts, only: [:show, :edit, :update, :destroy] do
+    member do
+      get :checkout
+    end
+  end
+  
   resources :cart_items, only: [:create]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

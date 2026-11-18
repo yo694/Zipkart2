@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_11_18_061544) do
+ActiveRecord::Schema[7.1].define(version: 2026_11_18_090653) do
   create_table "admins", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -39,6 +39,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_18_061544) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "order_items", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.integer "product_variant_id", null: false
+    t.integer "qty", null: false
+    t.decimal "price", precision: 10, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_items_on_order_id"
+    t.index ["product_variant_id"], name: "index_order_items_on_product_variant_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -99,6 +110,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_11_18_061544) do
   add_foreign_key "cart_items", "carts"
   add_foreign_key "cart_items", "product_variants"
   add_foreign_key "carts", "users"
+  add_foreign_key "order_items", "orders"
+  add_foreign_key "order_items", "product_variants"
   add_foreign_key "orders", "users"
   add_foreign_key "product_variants", "products"
   add_foreign_key "products", "vendors"

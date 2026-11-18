@@ -15,6 +15,7 @@
 
 <%= link_to "Edit Cart", edit_cart_path(@cart) %>
 <%= link_to "Continue Shopping", products_path %>
+<%= link_to "Proceed to Checkout", checkout_cart_path(@cart) %>
 
 <%= button_to "Delete Entire Cart",
     cart_path(@cart),

@@ -1,9 +1,9 @@
 class CartsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+  before_action :set_cart, only: [:show, :edit, :update, :destroy,:checkout]
 
   def show
-    @cart_items = @cart.cart_items.includes(:product_variant)
+    @cart_items = @cart.cart_items.includes(product_variant: :product)
   end
   
   def edit
@@ -20,6 +20,11 @@ class CartsController < ApplicationController
   def destroy 
     @cart.destroy
     redirect_to products_path, notice: "cart deleted successfullyy"
+  end
+
+  def checkout 
+    @cart_items = @cart.cart_items.includes(product_variant: :product)
+    @total_amount = @cart_items.sum{|item| item.price * item.qty}
   end
 
   private 
