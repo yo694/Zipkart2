@@ -1,0 +1,40 @@
+class CartsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_cart, only: [:show, :edit, :update, :destroy]
+
+  def show
+    @cart_items = @cart.cart_items.includes(:product_variants)
+  end
+  
+  def edit
+  end
+
+  def update
+    if @cart.update(cart_params)
+      redirect_to @cart, notice: "cart updated successfully"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy 
+    @cart.destroy
+    redirect_to products_path, notice: "cart deleted successfullyy"
+  end
+
+  private 
+
+  def set_cart
+    @cart = current_user.cart
+    redirect_to products_path, alert: "cart not found" unless @cart
+  end
+  
+  def cart_params
+    params.require(:cart).permit(
+      cart_item_attributes: [
+        :id,
+        :qty,
+        :_destroy
+      ]
+    )
+end
