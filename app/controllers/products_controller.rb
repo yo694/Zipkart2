@@ -25,13 +25,6 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to @product, notice: "Product created successfully"
     else
-      puts "product errors"
-      puts @product.errors.full_messages
-      puts "VARIANT ERRORS:"
-      @product.product_variants.each do |variant|
-        puts variant.errors.full_messages
-    end
-
       render :new, status: :unprocessable_entity
     end
   end

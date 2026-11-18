@@ -2,9 +2,8 @@
 
 <h1>Customer Home</h1>
 <%= link_to "View Products", products_path %>
-<% if user_signed_in? %>
-  <h2>Hello, <%= current_user.name %></h2>
 
+<% if user_signed_in? %>
   <% if current_user.vendor.present? %>
   <%= link_to "Switch to Vendor Account", vendor_path %>
   <% else %>
@@ -12,7 +11,6 @@
   <%= link_to "Become Vendor" , new_vendor_path %>
   <% end %>
 
-  <%= button_to "Logout", destroy_user_session_path, method: :delete %>
 <% else %>
   <%= link_to "Sign Up", new_user_registration_path %>
   <%= link_to "Login", new_user_session_path %>
