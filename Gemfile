@@ -67,4 +67,3 @@ group :test do
 end
 
 gem 'devise'
-gem 'nested_form_fields'
