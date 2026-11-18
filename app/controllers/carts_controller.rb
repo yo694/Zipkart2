@@ -3,7 +3,7 @@ class CartsController < ApplicationController
   before_action :set_cart, only: [:show, :edit, :update, :destroy]
 
   def show
-    @cart_items = @cart.cart_items.includes(:product_variants)
+    @cart_items = @cart.cart_items.includes(:product_variant)
   end
   
   def edit
@@ -31,10 +31,11 @@ class CartsController < ApplicationController
   
   def cart_params
     params.require(:cart).permit(
-      cart_item_attributes: [
+      cart_items_attributes: [
         :id,
         :qty,
         :_destroy
       ]
     )
+    end
 end
