@@ -1,9 +1,10 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_product, only: [:show, :edit, :update, :destroy]
-  before_action :require_vendor, only: [:new, :create, :edit, :update, :destroy]
 
   def index
+    authorize Product, :index?
+
     if current_user.vendor
       @products = Product.by_vendor(current_user.vendor.id)
     else
@@ -12,15 +13,21 @@ class ProductsController < ApplicationController
   end
 
   def show
+    authorize @product
   end
 
   def new
     @product = Product.new
     @product.product_variants.build
+
+    authorize @product
   end
 
   def create
-    @product = current_user.vendor.products.build(product_params)
+    @product = Product.new(product_params)
+    authorize @product
+
+    @product.vendor = current_user.vendor
 
     if @product.save
       redirect_to @product, notice: "Product created successfully"
@@ -30,9 +37,12 @@ class ProductsController < ApplicationController
   end
 
   def edit
+    authorize @product
   end
 
   def update
+    authorize @product
+
     if @product.update(product_params)
       redirect_to @product, notice: "Product updated successfully"
     else
@@ -41,6 +51,8 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+    authorize @product
+
     @product.destroy
     redirect_to products_path, notice: "Product deleted successfully"
   end
@@ -53,10 +65,6 @@ class ProductsController < ApplicationController
     else
       @product = Product.find(params[:id])
     end
-  end
-
-  def require_vendor
-    redirect_to products_path, alert: "Only vendors can manage products" unless current_user.vendor
   end
 
   def product_params
