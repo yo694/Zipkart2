@@ -1,15 +1,21 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
 
-    def index
+  def index
+    authorize Order, :index?
+
     @orders = current_user.orders.order(created_at: :desc)
   end
 
   def show
     @order = current_user.orders.find(params[:id])
+
+    authorize @order
   end
 
   def create
+    authorize Order, :create?
+
     @cart = current_user.cart
 
     if @cart
@@ -31,11 +37,13 @@ class OrdersController < ApplicationController
           price: item.price
         }
       end
+
       @order = current_user.orders.create(
         total_amount: @total_amount,
         status: :pending,
         order_items_attributes: order_items_attributes
       )
+
       @cart.cart_items.destroy_all
 
     else
@@ -45,5 +53,4 @@ class OrdersController < ApplicationController
 
     redirect_to @order, notice: "Order placed successfully!"
   end
-
 end
