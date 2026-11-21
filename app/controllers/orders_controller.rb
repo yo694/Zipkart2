@@ -24,18 +24,18 @@ class OrdersController < ApplicationController
         item.price * item.qty
       end
 
-      @order = current_user.orders.create(
-        total_amount: @total_amount,
-        status: :pending
-      )
-
-      @cart_items.each do |item|
-        @order.order_items.create(
+      order_items_attributes = @cart_items.map do |item|
+        {
           product_variant_id: item.product_variant_id,
           qty: item.qty,
           price: item.price
-        )
+        }
       end
+      @order = current_user.orders.create(
+        total_amount: @total_amount,
+        status: :pending,
+        order_items_attributes: order_items_attributes
+      )
       @cart.cart_items.destroy_all
 
     else
