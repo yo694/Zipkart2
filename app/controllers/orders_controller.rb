@@ -1,20 +1,17 @@
+
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_order, only: [:show]
+  before_action :authorize_resource
 
   def index
-    authorize Order, :index?
     @orders = policy_scope(Order).order(created_at: :desc)
   end
 
   def show
-    @order = current_user.orders.find(params[:id])
-
-    authorize @order
   end
 
   def create
-    authorize Order, :create?
-
     @cart = current_user.cart
 
     if @cart
@@ -44,12 +41,25 @@ class OrdersController < ApplicationController
       )
 
       @cart.cart_items.destroy_all
-
     else
       redirect_to products_path, alert: "Cart does not exist."
       return
     end
 
     redirect_to @order, notice: "Order placed successfully!"
+  end
+
+  private
+
+  def set_order
+    @order = current_user.orders.find(params[:id])
+  end
+
+  def authorization_resource
+    if action_name == "show"
+      @order
+    else
+      Order
+    end
   end
 end
