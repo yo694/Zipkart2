@@ -32,11 +32,7 @@ class CartsController < ApplicationController
   private
 
   def authorization_resource
-    if action_name == "checkout"
-      [@cart, :checkout?]
-    else
-      @cart
-    end
+    @cart
   end
 
   def set_cart
