@@ -40,13 +40,19 @@ class OrdersController < ApplicationController
         order_items_attributes: order_items_attributes
       )
 
-      @cart.cart_items.destroy_all
+      if @order.persisted?
+        OrderMailer.with(order: @order).order_confirmation.deliver_now
+
+        @cart.cart_items.destroy_all
+
+        redirect_to @order, notice: "Order placed successfully!"
+      else
+        redirect_to products_path, alert: "Order could not be placed. please try again"
+      end
+
     else
       redirect_to products_path, alert: "Cart does not exist."
-      return
     end
-
-    redirect_to @order, notice: "Order placed successfully!"
   end
 
   private
