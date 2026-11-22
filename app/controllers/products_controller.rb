@@ -1,27 +1,24 @@
+
 class ProductsController < ApplicationController
   before_action :authenticate_user!
+
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :prepare_product, only: [:new, :create]
+  before_action :authorize_resource
 
   def index
-    authorize Product, :index?
     @products = policy_scope(Product)
   end
 
   def show
-    authorize @product
   end
 
   def new
-    @product = Product.new
     @product.product_variants.build
-
-    authorize @product
   end
 
   def create
-    @product = Product.new(product_params)
-    authorize @product
-
+    @product.assign_attributes(product_params)
     @product.vendor = current_user.vendor
 
     if @product.save
@@ -32,12 +29,9 @@ class ProductsController < ApplicationController
   end
 
   def edit
-    authorize @product
   end
 
   def update
-    authorize @product
-
     if @product.update(product_params)
       redirect_to @product, notice: "Product updated successfully"
     else
@@ -46,13 +40,23 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    authorize @product
-
     @product.destroy
     redirect_to products_path, notice: "Product deleted successfully"
   end
 
   private
+
+  def prepare_product
+    @product = Product.new
+  end
+
+  def authorization_resource
+    if action_name == "index"
+      Product
+    else
+      @product
+    end
+  end
 
   def set_product
     if current_user.vendor

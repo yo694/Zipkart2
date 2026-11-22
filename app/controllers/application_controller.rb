@@ -1,3 +1,4 @@
+
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
@@ -27,5 +28,13 @@ class ApplicationController < ActionController::Base
     else
       current_user
     end
+  end
+
+  def authorize_resource
+    authorize authorization_resource
+  end
+
+  def authorization_resource
+    raise NotImplementedError, "Define authorization_resource in the controller"
   end
 end
