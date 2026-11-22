@@ -1,3 +1,4 @@
+
 class ProductPolicy < ApplicationPolicy
 
   def index?
@@ -26,6 +27,16 @@ class ProductPolicy < ApplicationPolicy
 
   def destroy?
     edit?
+  end
+
+  class Scope < ApplicationPolicy::Scope
+    def resolve
+      if user.vendor.present?
+        scope.where(vendor_id: user.vendor.id)
+      else
+        scope.all
+      end
+    end
   end
 
 end

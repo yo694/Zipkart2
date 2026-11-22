@@ -4,12 +4,7 @@ class ProductsController < ApplicationController
 
   def index
     authorize Product, :index?
-
-    if current_user.vendor
-      @products = Product.by_vendor(current_user.vendor.id)
-    else
-      @products = Product.all
-    end
+    @products = policy_scope(Product)
   end
 
   def show

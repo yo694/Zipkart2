@@ -3,8 +3,7 @@ class OrdersController < ApplicationController
 
   def index
     authorize Order, :index?
-
-    @orders = current_user.orders.order(created_at: :desc)
+    @orders = policy_scope(Order).order(created_at: :desc)
   end
 
   def show
