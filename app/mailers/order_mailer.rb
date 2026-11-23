@@ -1,7 +1,7 @@
 class OrderMailer < ApplicationMailer
 
   def order_confirmation
-    @order = params[:order]
+    @order = Order.find(params[:order_id])
     @user = @order.user
 
     mail(
