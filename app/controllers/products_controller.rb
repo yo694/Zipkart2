@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
   before_action :authorize_resource
 
   def index
-    @products = policy_scope(Product)
+    @products = policy_scope(Product).page(params[:page]).per(2)
   end
 
   def show
