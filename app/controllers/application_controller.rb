@@ -1,8 +1,8 @@
-
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
   before_action :permitted_parameters, if: :devise_controller?
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   private
 
@@ -37,4 +37,9 @@ class ApplicationController < ActionController::Base
   def authorization_resource
     raise NotImplementedError, "Define authorization_resource in the controller"
   end
+
+  def record_not_found
+    render plain: "Record not found.", status: :not_found
+  end
+
 end
