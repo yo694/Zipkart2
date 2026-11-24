@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   namespace :admin do
+    resources :users, only: [:index]
+    resources :vendors, only: [:index]
     root 'home#index'
   end
   devise_for :admins , skip: [:registrations]
@@ -28,5 +30,5 @@ Rails.application.routes.draw do
   if Rails.env.development?
     mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
-  
+
 end

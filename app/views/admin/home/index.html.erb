@@ -1,3 +1,5 @@
 <h1>Welcome to Zipkart Admin Dashboard!</h1>
+<%= link_to "Manage Users", admin_users_path %>
+<%= link_to "Manage Vendors", admin_vendors_path %>
 <p>You are logged in as Admin.</p>
 <%= button_to "Logout", destroy_admin_session_path, method: :delete %>
