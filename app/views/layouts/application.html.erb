@@ -15,6 +15,8 @@
     <% if user_signed_in? %>
         <h2>Hello, <%= current_user.name %></h2>
         <%= link_to "View My Cart", cart_path(current_user.cart) if current_user.cart.present? %>
+        <%= link_to "View My Orders", orders_path %>
+
     <% end %>
 
     <%= yield %>
