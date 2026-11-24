@@ -13,6 +13,7 @@ class VendorsController < ApplicationController
 
   def create
     if @vendor.save
+      AdminMailer.with(vendor_id: @vendor.id).vendor_registered.deliver_now
       redirect_to vendor_path, notice: "Vendor Registered Successfully!!"
     else
       render :new, status: :unprocessable_entity
