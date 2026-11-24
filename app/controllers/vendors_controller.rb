@@ -2,8 +2,8 @@
 class VendorsController < ApplicationController
   before_action :authenticate_user!
   before_action :check_existing_vendor, only: [:new, :create]
-  before_action :prepare_vendor, only: [:new, :create]
   before_action :authorize_resource
+  before_action :prepare_vendor, only: [:new, :create]
 
   def home
   end
@@ -31,17 +31,13 @@ class VendorsController < ApplicationController
   end
 
   def authorization_resource
-    if action_name == "home"
-      Vendor
-    else
-      @vendor
-    end
+    Vendor
   end
 
   def vendor_params
     params.require(:vendor).permit(
       :bussiness_name,
-      :bussiness_desription,
+      :bussiness_description,
       :gst_id
     )
   end

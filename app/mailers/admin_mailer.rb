@@ -4,8 +4,8 @@ class AdminMailer < ApplicationMailer
     @user = @vendor.user
 
     mail(
-      to: Admin.first.email
-      cc: @user.email
+      to: Admin.first.email,
+      cc: @user.email,
       subject: "New Vendor Registration - Zipkart"
     )
   end

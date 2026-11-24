@@ -1,15 +1,15 @@
 class VendorPolicy < ApplicationPolicy
 
   def home?
-    user.vendor.present?
+    user.present? && user.vendor.present?
   end
 
   def new?
-    user.vendor.nil?
+    user.present? && user.vendor.nil?
   end
 
   def create?
-    user.vendor.nil?
+    user.present? && user.vendor.nil?
   end
 
 end
