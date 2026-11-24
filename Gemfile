@@ -71,3 +71,4 @@ end
 gem 'devise'
 gem 'pundit'
 gem 'kaminari'
+gem 'pagy', '~> 9.4'

@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
+  include Pagy::Backend
 
   before_action :permitted_parameters, if: :devise_controller?
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
