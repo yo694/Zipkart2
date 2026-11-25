@@ -1,5 +1,13 @@
 <h1>Users</h1>
 
+<%= form_with url: admin_users_path, method: :get do |f| %>
+  <%= f.text_field :search,
+      value: params[:search],
+      placeholder: "Search by name or email..." %>
+
+  <%= f.submit "Search" %>
+<% end %>
+
 <% @users.each do |user| %>
   <p><%= user.name %> - <%= user.email %></p>
 <% end %>

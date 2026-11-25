@@ -1,9 +1,19 @@
 class Admin::UsersController < ApplicationController
   before_action :authenticate_admin!
   before_action :authorize_resource
-
+  
   def index
-    @pagy,@users = pagy(User.all.order(created_at: :desc),limit: 5)
+    users = User.all.order(created_at: :desc)
+    if params[:search].present?
+      search = params[:search].strip
+      search = "%#{User.sanitize_sql_like(search)}%"
+      users = users.where(
+        "name LIKE ? OR email LIKE ?",
+        search,
+        search
+        )
+    end
+    @pagy, @users = pagy(users, limit: 5)
   end
 
   private

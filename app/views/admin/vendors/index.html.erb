@@ -1,6 +1,16 @@
 <h1>Vendors</h1>
 
-<% @vendors.each do |vendor| %>
-  <p><%= vendor.bussiness_name %></p>
+<%= form_with url: admin_vendors_path, method: :get do |f| %>
+  <%= f.text_field :search,
+      value: params[:search],
+      placeholder: "Search by business name or GST ID..." %>
+
+  <%= f.submit "Search" %>
 <% end %>
+
+<% @vendors.each do |vendor| %>
+  <p><%= vendor.bussiness_name %> - <%= vendor.gst_id %></p>
+
+<% end %>
+
 <%== pagy_nav(@pagy) %>
