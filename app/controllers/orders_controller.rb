@@ -15,8 +15,8 @@ class OrdersController < ApplicationController
         @orders = @orders.where(status: search.downcase)
       end
     end
-    
-   @orders = @orders .page(params[:page]).per(2)
+
+   @orders = @orders .page(params[:page]).per(10)
   end
 
   def show

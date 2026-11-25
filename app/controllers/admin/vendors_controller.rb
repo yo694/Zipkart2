@@ -14,7 +14,7 @@ class Admin::VendorsController < ApplicationController
         )
       end
       
-      @pagy, @vendors = pagy(vendors, limit: 5)
+      @pagy, @vendors = pagy(vendors, limit: 10)
     end
 
   private

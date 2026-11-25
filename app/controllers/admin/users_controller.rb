@@ -13,7 +13,7 @@ class Admin::UsersController < ApplicationController
         search
         )
     end
-    @pagy, @users = pagy(users, limit: 5)
+    @pagy, @users = pagy(users, limit: 10)
   end
 
   private

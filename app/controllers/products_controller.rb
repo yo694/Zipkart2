@@ -14,7 +14,7 @@ class ProductsController < ApplicationController
       @products = @products.where("product_name LIKE ?", search)
    end
 
-    @products = @products.page(params[:page]).per(2)
+    @products = @products.page(params[:page]).per(10)
   end
 
   def show
