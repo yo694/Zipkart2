@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
       if @order.persisted?
         OrderMailer.with(order_id: @order.id).order_confirmation.deliver_now
 
-        @cart.cart_items.destroy_all
+        @cart.destroy
 
         redirect_to @order, notice: "Order placed successfully!"
       else
