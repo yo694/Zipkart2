@@ -1,4 +1,3 @@
-
 class ProductsController < ApplicationController
   before_action :authenticate_user!
 
@@ -7,7 +6,14 @@ class ProductsController < ApplicationController
   before_action :authorize_resource
 
   def index
-    @products = policy_scope(Product).page(params[:page]).per(2)
+    
+    @products = policy_scope(Product)
+    if params[:search].present?
+      search = "%#{Product.sanitize_sql_like(params[:search])}%"
+      @products = @products.where("product_name LIKE ?", search)
+   end
+
+    @products = @products.page(params[:page]).per(2)
   end
 
   def show
