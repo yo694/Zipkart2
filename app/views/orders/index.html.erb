@@ -1,5 +1,13 @@
-
 <h1>My Orders</h1>
+
+<%= form_with url: orders_path, method: :get do |f| %>
+  <%= f.text_field :search,
+      value: params[:search],
+      placeholder: "Search by order ID or status..." %>
+
+  <%= f.submit "Search" %>
+<% end %>
+
 
 <% @orders.each do |order| %>
   <h3>Order #<%= order.id %></h3>

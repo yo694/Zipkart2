@@ -5,7 +5,18 @@ class OrdersController < ApplicationController
   before_action :authorize_resource
 
   def index
-    @orders = policy_scope(Order).order(created_at: :desc).page(params[:page]).per(2)
+    @orders = policy_scope(Order).order(created_at: :desc)
+
+    if params[:search].present?
+      search = params[:search].strip
+       if search.match?(/\A\d+\z/)
+        @orders = @orders.where(id: search)
+      else
+        @orders = @orders.where(status: search.downcase)
+      end
+    end
+    
+   @orders = @orders .page(params[:page]).per(2)
   end
 
   def show

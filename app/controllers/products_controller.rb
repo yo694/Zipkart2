@@ -9,6 +9,7 @@ class ProductsController < ApplicationController
     
     @products = policy_scope(Product)
     if params[:search].present?
+      search = params[:search].strip
       search = "%#{Product.sanitize_sql_like(params[:search])}%"
       @products = @products.where("product_name LIKE ?", search)
    end
